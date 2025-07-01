@@ -1,14 +1,13 @@
-const { Router } = require("expresss");
-const { use } = require("react");
+const { Router } = require("express");
 const courseRouter = Router();
 
-app.post("/course/purchase", function (req, res) {
+courseRouter.post("/purchase", function (req, res) {
   res.json({
     msg: "User want to purchase purchase endpoint",
   });
 });
 
-app.get("/course/preview", function (req, res) {
+courseRouter.get("/preview", function (req, res) {
   res.json({
     msg: "Courses endpoint",
   });

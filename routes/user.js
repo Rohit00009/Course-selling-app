@@ -1,5 +1,4 @@
-const { Router } = require("expresss");
-const { use } = require("react");
+const { Router } = require("express");
 const userRouter = Router();
 
 userRouter.post("/user/signup", function (req, res) {

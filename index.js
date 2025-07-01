@@ -8,7 +8,7 @@ const { userRouter } = require("./routes/user");
 const app = express();
 // app.use(express.json());
 
-app.use("/user", userRouter);
-app.use("/course", courseRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/course", courseRouter);
 
 app.listen(3000);
