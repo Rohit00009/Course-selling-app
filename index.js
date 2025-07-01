@@ -8,12 +8,34 @@ app.use(express.json());
 
 function auth(req, res, next) {}
 
-app.post("/signup", function (req, res) {});
+app.post("/user/signup", function (req, res) {
+  res.json({
+    msg: "Signup endpoint",
+  });
+});
 
-app.post("/login", function (req, res) {});
+app.post("/user/signin", function (req, res) {
+  res.json({
+    msg: "Signin endpoint",
+  });
+});
 
-app.post("/purchase", function (req, res) {});
+app.get("/user/purchases", function (req, res) {
+  res.json({
+    msg: "User purchases endpoint",
+  });
+});
 
-app.get("/seecourse", function (req, res) {});
+app.post("/course/purchase", function (req, res) {
+  res.json({
+    msg: "User want to purchase purchase endpoint",
+  });
+});
+
+app.get("/courses", function (req, res) {
+  res.json({
+    msg: "Courses endpoint",
+  });
+});
 
 app.listen(3000);
