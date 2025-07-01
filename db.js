@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-console.log("connected to database");
+// console.log("connected to database");
 mongoose.connect(
   "mongodb+srv://admin:5hURWwyBDvxuTikf@cluster0.cm424xg.mongodb.net/coursera-app"
 );
