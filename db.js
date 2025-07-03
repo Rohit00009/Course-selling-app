@@ -2,44 +2,47 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 // console.log("connected to database");
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  process.env.MONGO_URL
+  //   , {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
+  // }
+);
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.ObjectId;
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
   firstName: String,
   lastName: String,
 });
 
-const AdminSchema = new Schema({
+const adminSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
   firstName: String,
   lastName: String,
 });
 
-const CourseSchema = new Schema({
+const courseSchema = new Schema({
   title: String,
   description: String,
   price: Number,
   imageUrl: String,
-  creatorID: ObjectId,
+  creatorId: ObjectId,
 });
 
-const PurchaseSchema = new Schema({
-  courseId: ObjectId,
+const purchaseSchema = new Schema({
   userId: ObjectId,
+  courseId: ObjectId,
 });
 
-const userModel = mongoose.model("user", UserSchema);
-const adminModel = mongoose.model("admin", AdminSchema);
-const courseModel = mongoose.model("course", CourseSchema);
-const purchaseModel = mongoose.model("purchase", PurchaseSchema);
+const userModel = mongoose.model("user", userSchema);
+const adminModel = mongoose.model("admin", adminSchema);
+const courseModel = mongoose.model("course", courseSchema);
+const purchaseModel = mongoose.model("purchase", purchaseSchema);
 
 module.exports = {
   userModel,

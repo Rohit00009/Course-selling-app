@@ -98,7 +98,7 @@ adminRouter.post("/signin", async function (req, res) {
   });
 });
 
-adminRouter.post("/", adminMiddleware, async function (req, res) {
+adminRouter.post("/course", adminMiddleware, async function (req, res) {
   const adminId = req.userId;
 
   const { title, description, imageUrl, price } = req.body;
@@ -118,42 +118,49 @@ adminRouter.post("/", adminMiddleware, async function (req, res) {
 
 adminRouter.put("/change", adminMiddleware, async function (req, res) {
   const adminId = req.userId;
-
   const { title, description, imageUrl, price, courseId } = req.body;
 
-  const course = await courseModel.updateOne(
-    {
-      _id: courseId,
-      creatorId: adminId,
-    },
-    {
-      title: title,
-      description: description,
-      imageUrl: imageUrl,
-      price: price,
+  try {
+    const updatedCourse = await courseModel.findOneAndUpdate(
+      {
+        _id: courseId,
+        creatorId: adminId, // ensures only creator can update
+      },
+      {
+        title,
+        description,
+        imageUrl,
+        price,
+      },
+      {
+        new: true, // return the updated document
+      }
+    );
+
+    if (!updatedCourse) {
+      return res.status(404).json({ msg: "Course not found or unauthorized" });
     }
-  );
-  res.json({
-    msg: "Course Updated",
-    courseId: course._id,
-  });
-  res.json({
-    msg: "admin course updates endpoint",
-  });
+
+    res.json({
+      msg: "Course updated successfully",
+      course: updatedCourse,
+    });
+  } catch (error) {
+    console.error("Update Error:", error);
+    res.status(500).json({ msg: "Something went wrong", error });
+  }
 });
 
-adminRouter.get("/bulk", adminMiddleware, async function (req, res) {
+adminRouter.get("/course/bulk", adminMiddleware, async function (req, res) {
   const adminId = req.userId;
 
   const courses = await courseModel.find({
     creatorId: adminId,
   });
+
   res.json({
     msg: "Course list",
     courses,
-  });
-  res.json({
-    msg: "admin course content addition endpoint",
   });
 });
 

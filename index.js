@@ -1,5 +1,5 @@
 require("dotenv").config();
-// console.log(process.env.MONGO_URL);
+console.log(process.env.MONGO_URL);
 
 const express = require("express");
 const jwt = require("jsonwebtoken");
@@ -17,10 +17,13 @@ app.use("/api/v1/course", courseRouter);
 app.use("/api/v1/admin", adminRouter);
 
 async function main() {
-  await mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(
+    process.env.MONGO_URL
+    //   , {
+    //   useNewUrlParser: true,
+    //   useUnifiedTopology: true,
+    // }
+  );
 
   app.listen(3000);
   console.log("listening on port 3000");

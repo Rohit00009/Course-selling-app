@@ -1,17 +1,18 @@
 const jwt = require("jsonwebtoken");
-const { JWT_ADMIN_PASSWORD } = require("../config");
+const { JWT_ADMIN_SECRET } = require("../config");
 
 function adminMiddleware(req, res, next) {
   const token = req.headers.token;
-  const decoded = jwt.verify(token, JWT_ADMIN_PASSWORD);
-
-  if (decoded) {
+  if (!token) {
+    return res.status(401).json({ msg: "No token provided" });
+  }
+  try {
+    const decoded = jwt.verify(token, JWT_ADMIN_SECRET);
     req.userId = decoded.id;
     next();
-  } else {
-    res.status(404).json({
-      msg: "You are not signed in",
-    });
+  } catch (err) {
+    console.error("JWT Error:", err.message);
+    return res.status(403).json({ msg: "Invalid or expired token" });
   }
 }
 
