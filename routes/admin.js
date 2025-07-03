@@ -116,13 +116,42 @@ adminRouter.post("/", adminMiddleware, async function (req, res) {
   });
 });
 
-adminRouter.put("/change", function (req, res) {
+adminRouter.put("/change", adminMiddleware, async function (req, res) {
+  const adminId = req.userId;
+
+  const { title, description, imageUrl, price, courseId } = req.body;
+
+  const course = await courseModel.updateOne(
+    {
+      _id: courseId,
+      creatorId: adminId,
+    },
+    {
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+      price: price,
+    }
+  );
+  res.json({
+    msg: "Course Updated",
+    courseId: course._id,
+  });
   res.json({
     msg: "admin course updates endpoint",
   });
 });
 
-adminRouter.get("/bulk", function (req, res) {
+adminRouter.get("/bulk", adminMiddleware, async function (req, res) {
+  const adminId = req.userId;
+
+  const courses = await courseModel.find({
+    creatorId: adminId,
+  });
+  res.json({
+    msg: "Course list",
+    courses,
+  });
   res.json({
     msg: "admin course content addition endpoint",
   });
