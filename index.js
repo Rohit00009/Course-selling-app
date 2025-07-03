@@ -1,3 +1,6 @@
+require("dotenv").config();
+console.log(process.env.MONGO_URL);
+
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
@@ -14,9 +17,7 @@ app.use("/api/v1/course", courseRouter);
 app.use("/api/v1/admin", adminRouter);
 
 async function main() {
-  await mongoose.connect(
-    "mongodb+srv://admin:5hURWwyBDvxuTikf@cluster0.cm424xg.mongodb.net/coursera-app"
-  );
+  await mongoose.connect(process.env.MONGO_URL);
 
   app.listen(3000);
   console.log("listening on port 3000");
