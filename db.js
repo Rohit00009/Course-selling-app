@@ -2,7 +2,10 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 // console.log("connected to database");
-mongoose.connect(process.env.MONGODB_URL);
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.ObjectId;
 
